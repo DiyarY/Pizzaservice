@@ -2,7 +2,7 @@
 
 ___
 
-## General information about this project
+## Project information
 
 This project serves as a beginner project to get familiar with the use of Propel. <br><br>
 In short, it's a Pizzaservice-database that provides respectively a table for each area:
