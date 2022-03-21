@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<database name="pizzaService" defaultIDMethod="native">
+    <table name="ingredients" phpName="Ingredient">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+        <column name="name" type="string" size="40" required="true" />
+    </table>
+    <table name="pizzas" phpName="Pizza">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+        <column name="name" type="string" size="160" required="true"/>
+        <column name="price" type="float" required="true"/>
+    </table>
+    <table name="ingredients_pizzas" phpName="Ingredient_pizza">
+        <column name="ingredients_id" type="integer" required="true" />
+        <column name="pizzas_id" type="integer" required="true" />
+        <foreign-key foreignTable="ingredients" phpName="Ingredient" refPhpName="Ingredient_pizza">
+            <reference local="ingredients_id" foreign="id"/>
+        </foreign-key>
+        <foreign-key foreignTable="pizzas" phpName="Pizza" refPhpName="Ingredient_pizza">
+            <reference local="pizzas_id" foreign="id"/>
+        </foreign-key>
+    </table>
+    <table name="orders_pizzas" phpName="Order_Pizza">
+        <column name="orders_id" type="integer" required="true"/>
+        <column name="pizzas_id" type="integer" required="true" />
+        <column name="amount" type="float" required="true" />
+        <foreign-key foreignTable="orders" phpName="Order" refPhpName="Order_Pizza">
+            <reference local="orders_id" foreign="id" />
+        </foreign-key>
+        <foreign-key foreignTable="pizzas" phpName="Pizza" refPhpName="Order_Pizza">
+            <reference local="pizzas_id" foreign="id"/>
+        </foreign-key>
+    </table>
+    <table name="orders" phpName="Order">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="customer_id" type="integer" required="true"/>
+        <column name="total_sum" type="float" required="true" />
+        <column name="order_date" type="string" size="20" required="true" />
+        <columnd name="completed_date" type="string" size="20" required="true" />
+    </table>
+    <table name="customer" phpName="Customer">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+        <column name="firstname" type="string" size="255" required="true" />
+        <column name="lastname" type="string" size="255" required="true" />
+        <column name="zip" type="integer" required="true" />
+        <column name="city" type="string" size="255" required="true" />
+        <column name="country" type="string" size="255" required="true" />
+    </table>
+</database>

@@ -1,0 +1,14 @@
+{
+    "name": "vagrant/vagrant",
+    "description": "PropelPizzaservice",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Vagrant\\Vagrant\\": "src/"
+        }
+    },
+
+    "require": {
+        "propel/propel1": "~1.7"
+    }
+}
