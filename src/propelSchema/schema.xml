@@ -9,7 +9,7 @@
         <column name="name" type="string" size="160" required="true"/>
         <column name="price" type="float" required="true"/>
     </table>
-    <table name="ingredients_pizzas" phpName="Ingredient_pizza">
+    <table name="ingredients_pizzas" phpName="Ingredient_pizza" isCrossRef="true">
         <column name="ingredients_id" type="integer" required="true" />
         <column name="pizzas_id" type="integer" required="true" />
         <foreign-key foreignTable="ingredients" phpName="Ingredient" refPhpName="Ingredient_pizza">
@@ -19,7 +19,7 @@
             <reference local="pizzas_id" foreign="id"/>
         </foreign-key>
     </table>
-    <table name="orders_pizzas" phpName="Order_Pizza">
+    <table name="orders_pizzas" phpName="Order_Pizza" isCrossRef="true">
         <column name="orders_id" type="integer" required="true"/>
         <column name="pizzas_id" type="integer" required="true" />
         <column name="amount" type="float" required="true" />
