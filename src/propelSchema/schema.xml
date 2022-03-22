@@ -2,24 +2,24 @@
 <database name="pizzaService" defaultIDMethod="native">
     <table name="ingredients" phpName="Ingredient">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
-        <column name="name" type="string" size="40" required="true" />
+        <column name="name" type="string" size="120" required="true" />
     </table>
     <table name="pizzas" phpName="Pizza">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
-        <column name="name" type="string" size="160" required="true"/>
+        <column name="name" type="string" size="120" required="true"/>
         <column name="price" type="float" required="true"/>
     </table>
-    <table name="ingredients_pizzas" phpName="Ingredient_pizza" isCrossRef="true">
+    <table name="pizza_ingredients" phpName="Ingredient_pizza" isCrossRef="true">
         <column name="ingredients_id" type="integer" required="true" />
         <column name="pizzas_id" type="integer" required="true" />
-        <foreign-key foreignTable="ingredients" phpName="Ingredient" refPhpName="Ingredient_pizza">
+        <foreign-key foreignTable="ingredients" phpName="Ingredient" refPhpName="pizza_ingredients">
             <reference local="ingredients_id" foreign="id"/>
         </foreign-key>
-        <foreign-key foreignTable="pizzas" phpName="Pizza" refPhpName="Ingredient_pizza">
+        <foreign-key foreignTable="pizzas" phpName="Pizza" refPhpName="pizza_ingredients">
             <reference local="pizzas_id" foreign="id"/>
         </foreign-key>
     </table>
-    <table name="orders_pizzas" phpName="Order_Pizza" isCrossRef="true">
+    <table name="order_pizzas" phpName="Order_Pizza" isCrossRef="true">
         <column name="orders_id" type="integer" required="true"/>
         <column name="pizzas_id" type="integer" required="true" />
         <column name="amount" type="float" required="true" />
@@ -32,12 +32,15 @@
     </table>
     <table name="orders" phpName="Order">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="customer_id" type="integer" required="true"/>
-        <column name="total_sum" type="float" required="true" />
-        <column name="order_date" type="string" size="20" required="true" />
-        <columnd name="completed_date" type="string" size="20" required="true" />
+        <column name="customers_id" type="integer" required="true"/>
+        <column name="total" type="float" required="true" />
+        <column name="created_at" type="timestamp" required="true" />
+        <columnd name="completed_at" type="timestamp" required="true" />
+        <foreign-key foreignTable="customers" phpName="Customer" refPhpName="Order">
+            <reference local="customers_id" foreign="id"/>
+        </foreign-key>
     </table>
-    <table name="customer" phpName="Customer">
+    <table name="customers" phpName="Customer">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
         <column name="firstname" type="string" size="255" required="true" />
         <column name="lastname" type="string" size="255" required="true" />
