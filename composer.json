@@ -2,13 +2,19 @@
     "name": "vagrant/vagrant",
     "description": "PropelPizzaservice",
     "type": "project",
+
     "autoload": {
         "psr-4": {
-            "Vagrant\\Vagrant\\": "src/"
-        }
+            "Vagrant\\Pizzaservice\\": " ",
+            "Pizzaservice\\": "lib",
+            "Pizzaservice\\Cli\\": "cli",
+            "Pizzaservice\\Cli\\Commands\\": ""
+        },
+        "files": ["vendor/propel/propel1/runtime/lib/Propel.php"]
     },
 
     "require": {
-        "propel/propel1": "~1.7"
+        "propel/propel1": "~1.7",
+        "symfony/console": "^5.4"
     }
 }
