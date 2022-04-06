@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * A propel-setup application so the propel-code can be executed.
+ */
+
 //Include the main Propel script
 require_once "vendor/propel/propel1/runtime/lib/Propel.php";
 

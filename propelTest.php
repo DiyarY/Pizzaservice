@@ -5,13 +5,13 @@ namespace Pizzaservice;
 require __DIR__ . '/vendor/autoload.php';
 require_once "setup.php";
 
-use Pizza;
-
 /*
  * Test script.
  *
- * Sets a new values into table-pizzas of the pizzaService database.
+ * Sets and includes a new value into pizza table of the pizzaService-database.
  */
+
+use Pizza;
 
 $pizza = new Pizza();
 

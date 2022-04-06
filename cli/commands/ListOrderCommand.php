@@ -1,36 +1,38 @@
 <?php
 namespace Pizzaservice\cli\commands;
 
-use Order;
 use OrderQuery;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 
 /**
- * Creation of terminal-command with symfony which lists all the available orders of the order-table
- * from the pizzaService database.
+ * Implementation of a command that gives information about the current contained values of the order-table.
+ *
+ * @cass ListOrderCommand
  */
 class ListOrderCommand extends Command
 {
     protected static $defaultName = "list:order";
 
     /**
-     * Configures the instances.
+     * Configuration of additional instances.
      *
-     * Contains configured instances which can be entered over the command-line.
+     * A description about the function of the command.
      *
      * @return void
      */
     protected function configure()
     {
-        $this->setDescription("Lists up all orders from the order-table");
+        $this->setDescription("Lists up all order_name values from the order-table");
     }
 
     /**
-     * Lists the content of the order-table.
+     * Lists defined values from the order-table.
      *
-     * Searches for every order-name from the order-table to display them through the command-line.
+     * Shows the current total number about all contained order values.
+     *
+     * Runs through the order-table to initialise and list up  every order_name value from the order-table.
      *
      * @param InputInterface $input
      * @param OutputInterface $output
@@ -38,10 +40,12 @@ class ListOrderCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        //Array of order-table
         $orders = OrderQuery::create()->find();
 
-        echo "Currently the order-table contains ".count($orders)." orders";
+        echo "Currently the order-table contains ".count($orders)." orders\n";
 
+        //Runs through the order-table to initialise and list up every order_name values
         foreach ($orders as $order)
         {
             echo $order->getName()."\n";

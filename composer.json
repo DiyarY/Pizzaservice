@@ -5,12 +5,15 @@
 
     "autoload": {
         "psr-4": {
-            "Vagrant\\Pizzaservice\\": " ",
-            "Pizzaservice\\": "lib",
-            "Pizzaservice\\Cli\\": "cli",
-            "Pizzaservice\\Cli\\Commands\\": ""
+            "Pizzaservice\\": "",
+            "Pizzaservice\\Cli\\": "cli/",
+            "Pizzaservice\\Lib\\": "lib/"
         },
-        "files": ["vendor/propel/propel1/runtime/lib/Propel.php"]
+
+        "classmap": [
+            "cli/commands/",
+            "lib/"
+        ]
     },
 
     "require": {

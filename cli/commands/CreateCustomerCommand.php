@@ -9,26 +9,32 @@ use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 /**
- * Creation of a command where the user is going to be asked for values about a new customer and included inside the
+ * Implementation of a command where the user is going to be asked to create new customer values to include them into the
  * customer-table of the pizzaService-database.
+ *
+ * @class CreateCustomerCommand
  */
 class CreateCustomerCommand extends Command
 {
     protected static $defaultName = "create:customer";
 
     /**
+     * Configuration of additional instances.
+     *
+     * A description about the function of the command.
+     *
      * @return void
      */
     protected function configure()
     {
-        $this->setDescription("Creates a new customer with its associated values");
+        $this->setDescription("Sets new customer vales which are going to be included into the customer-table.\n");
     }
 
     /**
-     * Includes new customer-verification.
+     * Creates and includes new customer values into the customer-table.
      *
-     * The user is going to be asked to create the respective new customer-values to verify, confirm, and include them
-     * inside the customer-table of the pizzaService-database.
+     * The user is going to be asked about new values for the customer which are going to be included inside
+     * customer-table after the confirmation question was confirmed.
      *
      * @param InputInterface $input
      * @param OutputInterface $output
@@ -39,7 +45,7 @@ class CreateCustomerCommand extends Command
     {
         $helper = $this->getHelper("question");
 
-        //Input for new customer-verification
+        //Input for new customer values
         $question = new Question("Please enter the first name of the new customer: \n");
         $inputCustomerFirstName = $helper->ask($input, $output, $question);
 
@@ -55,10 +61,9 @@ class CreateCustomerCommand extends Command
         $question = new Question("In which country does the new customer live\n");
         $inputCustomerCountry = $helper->ask($input, $output, $question);
 
-        //Lists up the new customer-values
-        echo "Following new customer verifications were detected: $inputCustomerFirstName, $inputCustomerLastName, $inputCustomerZip, $inputCustomerCity, $inputCustomerCountry";
+        echo "Following new customer verifications were detected: $inputCustomerFirstName, $inputCustomerLastName, $inputCustomerZip, $inputCustomerCity, $inputCustomerCountry\n";
 
-        //Confirms the new customer-values
+        //Confirms the new customer values
         $question = new ConfirmationQuestion("Do you want to save the new detected customer verifications", false, "/^(y|j)/i");
 
         if (!$helper->ask($input, $output, $question))
@@ -67,7 +72,7 @@ class CreateCustomerCommand extends Command
             return command::SUCCESS;
         }
 
-        //Set the new customer-verification inside the customer-table
+        //Sets the new customer values
         $customer = new Customer();
         $customer->setFirstname($inputCustomerFirstName);
         $customer->setLastname($inputCustomerLastName);
@@ -75,9 +80,11 @@ class CreateCustomerCommand extends Command
         $customer->setCity($inputCustomerCity);
         $customer->setCountry($inputCustomerCountry);
 
-        //Include the new customer-verification inside the customer-table
+        //Includes the new customer values into the customer-table
         $customer->save();
 
-        echo "The new customer-verification is included inside the customer-table";
+        echo "The new customer-verification is included inside the customer-table\n";
+
+        return Command::SUCCESS;
     }
 }
