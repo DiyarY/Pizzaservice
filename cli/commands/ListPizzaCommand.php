@@ -2,11 +2,10 @@
 
 namespace Pizzaservice\cli\commands;
 
-use Pizza;
-use PizzaQuery;
+use Pizzaservice\Propel\Models\PizzaQuery;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Implementation of a command that gives information about the current contained values of the pizza-table.
@@ -37,21 +36,21 @@ class ListPizzaCommand extends Command
      * Runs through the pizza-table to initialise and list up all available pizza_name values
      * from the pizza-table.
      *
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * @param InputInterface $_input
+     * @param OutputInterface $_output
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $_input, OutputInterface $_output)
     {
         //Array of pizza-table
         $pizzas = PizzaQuery::create()->find();
 
-        echo "Currently the pizza table contains ".count($pizzas)." pizzas\n";
+        $_output->writeln("Currently the pizza table contains ".count($pizzas)." pizzas\n");
 
         //Runs through the pizza-table to initialise and list up all pizza_name values
         foreach ($pizzas as $pizza)
         {
-            echo $pizza->getName()."\n";
+            $_output->writeln($pizza->getName()."\n");
         }
 
         return Command::SUCCESS;

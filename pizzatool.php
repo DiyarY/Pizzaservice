@@ -14,21 +14,13 @@ use Pizzaservice\cli\commands\CreateIngredientCommand;
 use Pizzaservice\cli\commands\ListIngredientCommand;
 use Pizzaservice\cli\commands\CreatePizzaCommand;
 use Pizzaservice\cli\commands\ListPizzaCommand;
-use Pizzaservice\cli\commands\CreateCustomerCommand;
-use Pizzaservice\cli\commands\ListCustomerCommand;
-use Pizzaservice\cli\commands\CreateOrderCommand;
-use Pizzaservice\cli\commands\ListOrderCommand;
 use Symfony\Component\Console\Application;
 
 $application = new Application();
 
-$application->add(new ListCustomerCommand());
-$application->add(new CreateCustomerCommand());
 $application->add(new CreatePizzaCommand());
 $application->add(new ListPizzaCommand());
 $application->add(new CreateIngredientCommand());
 $application->add(new ListIngredientCommand());
-$application->add(new CreateOrderCommand());
-$application->add(new ListOrderCommand());
 
 $application->run();

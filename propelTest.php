@@ -2,8 +2,11 @@
 
 namespace Pizzaservice;
 
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__. "/vendor/autoload.php";
 require_once "setup.php";
+
+use Pizzaservice\Propel\Models\Pizza;
+use Pizzaservice\Propel\Models\PizzaQuery;
 
 /*
  * Test script.
@@ -11,14 +14,8 @@ require_once "setup.php";
  * Sets and includes a new value into pizza table of the pizzaService-database.
  */
 
-use Pizza;
-
 $pizza = new Pizza();
 
-$pizza->setName("Tunfischpizza");
-$pizza->setPrice(6.90);
-$pizza->save();
-
-echo $pizza->getId()."\n";
-echo $pizza->getName()."\n";
-echo $pizza->getPrice()."\n";
+$pizza = PizzaQuery::create()
+    ->getName()
+    ->find();
