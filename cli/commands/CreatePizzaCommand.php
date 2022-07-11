@@ -3,9 +3,10 @@
 namespace Pizzaservice\Cli\Commands;
 
 use Pizzaservice\Propel\Models\Pizza;
+use Pizzaservice\Propel\Models\Pizza_IngredientQuery;
 use Pizzaservice\Propel\Models\PizzaQuery;
-use Pizzaservice\Propel\Models\Ingredient;
 use Pizzaservice\Propel\Models\IngredientQuery;
+use Pizzaservice\Propel\Models\Pizza_Ingredient;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -112,9 +113,14 @@ class CreatePizzaCommand extends Command
             $pizza->setName($inputPizzaName);
             $pizza->setPrice($inputPizzaPrice);
 
-            foreach ($ingredients as $ingredient)
+            foreach ($inputIngredients as $inputIngredient)
             {
-                $pizza->addIngredient($ingredient);
+                $ingredient = IngredientQuery::create()
+                    ->findOneByName($inputIngredient);
+
+                $pizzaIngredient = new Pizza_Ingredient();
+                $pizzaIngredient->setIngredient($ingredient);
+                $pizza->addPizza_Ingredient($pizzaIngredient);
             }
 
             //Includes the new pizza values into pizza-table
