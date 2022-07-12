@@ -3,10 +3,9 @@
 namespace Pizzaservice\Cli\Commands;
 
 use Pizzaservice\Propel\Models\Pizza;
-use Pizzaservice\Propel\Models\Pizza_IngredientQuery;
+use Pizzaservice\Propel\Models\PizzaIngredient;
 use Pizzaservice\Propel\Models\PizzaQuery;
 use Pizzaservice\Propel\Models\IngredientQuery;
-use Pizzaservice\Propel\Models\Pizza_Ingredient;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -49,15 +48,25 @@ class CreatePizzaCommand extends Command
      */
         protected function execute(InputInterface $_input, OutputInterface $_output)
         {
-            //Initialize the existing pizza names
+            //Initialize the existing pizzas
             $pizzas = PizzaQuery::create()->find();
 
             $_output->writeln("Following pizzas are already available:");
 
             foreach ($pizzas as $pizza)
             {
-                //Shows only the values of the name-column inside the pizza-table
-                $_output->writeln($pizza->getName());
+                //Shows all available pizzas
+                $_output->writeln("\n- ".$pizza->getName()." is already defined and consists of following ingredients:");
+
+                foreach ($pizza->getPizzaIngredients() as $pizzaIngredient)
+                {
+                    if ($pizzaIngredient)
+                    {
+                        $ingredient = $pizzaIngredient->getIngredient();
+                        //Lists the ingredients of an already defined pizza
+                        $_output->writeln("\t"."-> ".$ingredient->getName());
+                    }
+                }
             }
 
             //Input for new pizza values
@@ -71,10 +80,11 @@ class CreatePizzaCommand extends Command
                 ->filterByName($inputPizzaName)
                 ->findOne();
 
-            if ($uniquePizzaNames->getName() == $inputPizzaName)
+            if ($uniquePizzaNames)
             {
+                //Checks whether an entry with that property exists
                 $_output->writeln($inputPizzaName . " does already exist!");
-                return command::INVALID;
+                return false;
             }
 
             $question = new Question("Please enter the price for the new pizza: \n");
@@ -115,12 +125,12 @@ class CreatePizzaCommand extends Command
 
             foreach ($inputIngredients as $inputIngredient)
             {
-                $ingredient = IngredientQuery::create()
-                    ->findOneByName($inputIngredient);
-
-                $pizzaIngredient = new Pizza_Ingredient();
-                $pizzaIngredient->setIngredient($ingredient);
-                $pizza->addPizza_Ingredient($pizzaIngredient);
+                if ($ingredient) $pizza->addIngredient($ingredient);
+                else {
+                    //Checks whether an entry with that property exists
+                    $_output->writeln("Cannot find ingredient with name $inputIngredient in database!");
+                    return false;
+                }
             }
 
             //Includes the new pizza values into pizza-table

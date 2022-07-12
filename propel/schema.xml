@@ -11,27 +11,27 @@
         <column name="price" type="float" required="true"/>
     </table>
 
-    <table name="pizza_ingredients" phpName="Pizza_Ingredient" isCrossRef="true">
+    <table name="pizza_ingredients" phpName="PizzaIngredient" isCrossRef="true">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
         <column name="ingredient_id" type="integer" required="true" />
         <column name="pizza_id" type="integer" required="true" />
-        <foreign-key foreignTable="ingredients" phpName="Ingredient" refPhpName="Pizza_Ingredient">
+        <foreign-key foreignTable="ingredients" phpName="Ingredient" refPhpName="PizzaIngredient">
             <reference local="ingredient_id" foreign="id"/>
         </foreign-key>
-        <foreign-key foreignTable="pizzas" phpName="Pizza" refPhpName="Pizza_Ingredient">
+        <foreign-key foreignTable="pizzas" phpName="Pizza" refPhpName="PizzaIngredient">
             <reference local="pizza_id" foreign="id"/>
         </foreign-key>
     </table>
 
-    <table name="order_pizzas" phpName="Order_Pizza" isCrossRef="true">
+    <table name="order_pizzas" phpName="OrderPizza" isCrossRef="true">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
         <column name="order_id" type="integer" required="true"/>
         <column name="pizza_id" type="integer" required="true" />
         <column name="amount" type="float" required="true" />
-        <foreign-key foreignTable="orders" phpName="Order" refPhpName="Order_Pizza">
+        <foreign-key foreignTable="orders" phpName="Order" refPhpName="OrderPizza">
             <reference local="order_id" foreign="id" />
         </foreign-key>
-        <foreign-key foreignTable="pizzas" phpName="Pizza" refPhpName="Order_Pizza">
+        <foreign-key foreignTable="pizzas" phpName="Pizza" refPhpName="OrderPizza">
             <reference local="pizza_id" foreign="id"/>
         </foreign-key>
     </table>
@@ -42,7 +42,7 @@
         <column name="total" type="float" required="true" />
         <column name="created_at" type="date" required="true" />
         <column name="completed_at" type="time" required="true" />
-        <foreign-key foreignTable="customers" phpName="Customer">
+        <foreign-key foreignTable="customers" phpName="Customer" refPhpName="Order">
             <reference local="customer_id" foreign="id"/>
         </foreign-key>
     </table>
