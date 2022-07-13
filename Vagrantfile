@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
   end
 
    config.vm.provision "shell", inline: <<-SHELL
-     apt-get updae
+     apt-get update
 
      apt-get install -y php7.2-cli libapache2-mod-php7.2 php7.2-mysql php-pear php7.2-curl php7.2-gd php7.2-imap php7.2-mbstring php7.2-zip php7.2-sybase php7.2-intl php-xdebug
 

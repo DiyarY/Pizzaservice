@@ -1,0 +1,23 @@
+{
+    "name": "vagrant/vagrant",
+    "description": "PropelPizzaservice",
+    "type": "project",
+
+    "autoload": {
+        "psr-4": {
+            "Pizzaservice\\": "",
+            "Pizzaservice\\Cli\\": "cli/",
+            "Pizzaservice\\Propel\\": "propel/"
+        },
+
+        "classmap": [
+            "cli/commands/",
+            "propel/models/pizzaService/"
+        ]
+    },
+
+    "require": {
+        "propel/propel1": "~1.7",
+        "symfony/console": "^5.4"
+    }
+}
