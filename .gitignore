@@ -1,1 +1,7 @@
 .vagrant/
+.idea
+/vendor/
+propel/models
+propel/conf
+propel/schema.sql
+propel/sqldb.map
