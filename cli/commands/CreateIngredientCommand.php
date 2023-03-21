@@ -1,18 +1,16 @@
 <?php
 namespace Pizzaservice\cli\commands;
 
-use Ingredient;
+use PizzaService\Propel\Models\Ingredient;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Console\Question\Question;
 
 /**
  * Implementation of a command where the user is going to be asked to create new ingredient values which are going to be
  * included into the ingredient-table of the pizzaService-database.
- *
- * @class CreateIngredientCommand
  */
 class CreateIngredientCommand extends Command
 {
@@ -46,16 +44,15 @@ class CreateIngredientCommand extends Command
         //Input for new ingredient values
         $helper = $this->getHelper("question");
 
-        $question = new Question("Please enter the name of the new ingredient: \n");
-        $inputIngredientName = $helper->ask($input, $output, $question);
+        $inputIngredientName = $helper->ask($input, $output, new Question("Please enter the name of the new ingredient: \n"));
 
-        echo "Following new ingredients were detected: $inputIngredientName \n";
+        $output->writeln("Following new ingredients were detected: $inputIngredientName \n");
 
-        $question = new ConfirmationQuestion("Do you want to save the new detected ingredient name inside the ingredient-table?", false, "/^(y|j)/i");
+        $question = new ConfirmationQuestion("Do you want to save the new ingredient?", false, "/^(y|j)/i");
 
         if (!$helper->ask($input, $output, $question))
         {
-            echo "The new specified data about the ingredient name will be deleted now\n";
+            $output->writeln("Ok, no changes are made to the database.\n");
             return command::SUCCESS;
         }
 
@@ -66,7 +63,7 @@ class CreateIngredientCommand extends Command
         //Includes the new ingredient values into the ingredient-table
         $ingredient->save();
 
-        echo "The new specified ingredient name were be included inside the ingredient-table\n";
+        $output->writeln("The ingredient was added to the database successfully\n");
 
         return Command::SUCCESS;
     }

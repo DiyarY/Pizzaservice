@@ -1,19 +1,17 @@
 <?php
 namespace Pizzaservice\cli\commands;
 
-use OrderQuery;
+use PizzaService\Propel\Models\OrderQuery;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
 
 /**
  * Implementation of a command that gives information about the current contained values of the order-table.
- *
- * @cass ListOrderCommand
  */
-class ListOrderCommand extends Command
+class ListOrdersCommand extends Command
 {
-    protected static $defaultName = "list:order";
+    protected static $defaultName = "list:orders";
 
     /**
      * Configuration of additional instances.
@@ -43,13 +41,14 @@ class ListOrderCommand extends Command
         //Array of order-table
         $orders = OrderQuery::create()->find();
 
-        echo "Currently the order-table contains ".count($orders)." orders\n";
+        $output->writeln("Currently the order-table contains ".count($orders)." orders\n");
 
         //Runs through the order-table to initialise and list up every order_name values
         foreach ($orders as $order)
         {
-            echo $order->getName()."\n";
+            $output->writeln($order->getName()."\n");
         }
+
 
         return Command::SUCCESS;
     }

@@ -1,19 +1,18 @@
 <?php
 namespace Pizzaservice\cli\commands;
 
-use CustomerQuery;
+use PizzaService\Propel\Models\CustomerQuery;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
 
 /**
  * Implementation of a command that gives information about the current contained values of the customer-table.
- *
- * @class ListCustomerCommand
  */
-class ListCustomerCommand extends Command
+class ListCustomersCommand extends Command
 {
-    protected static $defaultName = "list:customer";
+    protected static $defaultName = "list:customers";
 
     /**
      * Configuration of instances.
@@ -43,15 +42,18 @@ class ListCustomerCommand extends Command
     {
         //Array of customer-table
         $customers = CustomerQuery::create()->find();
+        $output->writeln("Currently there is a total of ".count($customers)." customers\n");
 
-        echo "Currently there is a total of ".count($customers)." customers\n";
-
-        //Runs through the customer-table to initialise and list up all customer_firstName values
+        $table = new Table($output);
+        $table->setHeaders(["Firstname", "Lastname", "ZIP", "City", "Country"]);
         foreach ($customers as $customer)
         {
-            echo $customer->getFirstName()."\n";
+                //The values of the customer-table will be viewed in table format
+                $table->setRows([
+                    [$customer->getFirstName(), $customer->getLastName(), $customer->getZip(), $customer->getCity(), $customer->getCountry()],
+                ]);
+            $table->render();
         }
-
         return Command::SUCCESS;
     }
 }

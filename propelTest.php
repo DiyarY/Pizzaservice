@@ -11,8 +11,6 @@ require_once "setup.php";
  * Sets and includes a new value into pizza table of the pizzaService-database.
  */
 
-use Pizza;
-
 $pizza = new Pizza();
 
 $pizza->setName("Tunfischpizza");

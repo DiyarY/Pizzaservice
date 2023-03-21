@@ -7,12 +7,12 @@
         "psr-4": {
             "Pizzaservice\\": "",
             "Pizzaservice\\Cli\\": "cli/",
-            "Pizzaservice\\Lib\\": "lib/"
+            "Pizzaservice\\Propel\\": "propel/"
         },
 
         "classmap": [
             "cli/commands/",
-            "lib/"
+            "propel/models/pizzaService/"
         ]
     },
 

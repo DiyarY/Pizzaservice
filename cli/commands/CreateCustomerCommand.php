@@ -1,18 +1,17 @@
 <?php
 namespace Pizzaservice\cli\commands;
 
-use Customer;
+use PizzaService\Propel\Models\Customer;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Console\Question\Question;
 
 /**
  * Implementation of a command where the user is going to be asked to create new customer values to include them into the
  * customer-table of the pizzaService-database.
  *
- * @class CreateCustomerCommand
  */
 class CreateCustomerCommand extends Command
 {
@@ -27,7 +26,7 @@ class CreateCustomerCommand extends Command
      */
     protected function configure()
     {
-        $this->setDescription("Sets new customer vales which are going to be included into the customer-table.\n");
+        $this->setDescription("Allows to add a new customer into the customer-table.\n");
     }
 
     /**
@@ -46,29 +45,24 @@ class CreateCustomerCommand extends Command
         $helper = $this->getHelper("question");
 
         //Input for new customer values
-        $question = new Question("Please enter the first name of the new customer: \n");
-        $inputCustomerFirstName = $helper->ask($input, $output, $question);
+        $inputCustomerFirstName = $helper->ask($input, $output, new Question("Please enter the first name of the new customer: \n"));
 
-        $question = new Question("Please enter the last name of of the new customer: \n");
-        $inputCustomerLastName = $helper->ask($input, $output, $question);
+        $inputCustomerLastName = $helper->ask($input, $output, new Question("Please enter the last name of the new customer: \n"));
 
-        $question = new Question("Please enter the zip of the new Customer: \n");
-        $inputCustomerZip = $helper->ask($input , $output, $question);
+        $inputCustomerZip = $helper->ask($input, $output, new Question("Please enter the zip of the new customer: \n"));
 
-        $question = new Question("Where does the new customer live\n");
-        $inputCustomerCity = $helper->ask($input, $output, $question);
+        $inputCustomerCity = $helper->ask($input, $output, new Question("Where does the new customer live: \n"));
 
-        $question = new Question("In which country does the new customer live\n");
-        $inputCustomerCountry = $helper->ask($input, $output, $question);
+        $inputCustomerCountry = $helper->ask($input, $output, new Question("In which country does the new customer live: \n"));
 
-        echo "Following new customer verifications were detected: $inputCustomerFirstName, $inputCustomerLastName, $inputCustomerZip, $inputCustomerCity, $inputCustomerCountry\n";
+        $output->writeln("Following new customer verifications were detected: $inputCustomerFirstName, $inputCustomerLastName, $inputCustomerZip, $inputCustomerCity, $inputCustomerCountry\n");
 
         //Confirms the new customer values
-        $question = new ConfirmationQuestion("Do you want to save the new detected customer verifications", false, "/^(y|j)/i");
+        $question = new ConfirmationQuestion("Do you want to save the new customer?", false, "/^(y|j)/i");
 
         if (!$helper->ask($input, $output, $question))
         {
-            echo "The specified data of the customer will be deleted now\n";
+            $output->writeln("Ok, no changes are made to the database.\n");
             return command::SUCCESS;
         }
 
@@ -83,7 +77,7 @@ class CreateCustomerCommand extends Command
         //Includes the new customer values into the customer-table
         $customer->save();
 
-        echo "The new customer-verification is included inside the customer-table\n";
+        $output->writeln("The customer was added to the database successfully.\n");
 
         return Command::SUCCESS;
     }

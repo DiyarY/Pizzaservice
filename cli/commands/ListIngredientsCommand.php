@@ -2,19 +2,17 @@
 
 namespace Pizzaservice\cli\commands;
 
-use IngredientQuery;
+use PizzaService\Propel\Models\IngredientQuery;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
 
 /**
  * Implementation of a command that gives information about the current contained values of the ingredient-table.
- *
- * @class ListIngredientCommand
  */
-class ListIngredientCommand extends Command
+class ListIngredientsCommand extends Command
 {
-    protected static $defaultName = "list:ingredient";
+    protected static $defaultName = "list:ingredients";
 
     /**
      * Configuration of instances.
@@ -45,12 +43,12 @@ class ListIngredientCommand extends Command
         //Array of ingredient-table
         $ingredients = IngredientQuery::create()->find();
 
-        echo "Currently there is a total of ".count($ingredients)." ingredients inside the ingredient-table\n";
+        $output->writeln("Currently there is a total of ".count($ingredients)." ingredients inside the ingredient-table\n");
 
         //Runs through the ingredient-table to initialise and list up every ingredient_name value
         foreach ($ingredients as $ingredient)
         {
-            echo $ingredient->getName()."\n";
+            $output->writeln($ingredient->getName()."\n");
         }
 
         return Command::SUCCESS;
