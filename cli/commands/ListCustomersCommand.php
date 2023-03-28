@@ -49,7 +49,7 @@ class ListCustomersCommand extends Command
 
         //Sets the header of the table
         $table->setHeaders(["Firstname", "Lastname", "ZIP", "City", "Country"]);
-        $row = [];
+        $rows = [];
         foreach ($customers as $customer)
         {
             //Sets a row with the needed information for each customer

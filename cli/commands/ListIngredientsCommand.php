@@ -50,7 +50,7 @@ class ListIngredientsCommand extends Command
 
         //Sets the header of the table
         $table->setHeaders(["Ingredient"]);
-        $row = [];
+        $rows = [];
         foreach ($ingredients as $ingredient)
         {
             //Sets a row with the name of each ingredient

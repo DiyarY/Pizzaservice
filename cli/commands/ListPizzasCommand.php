@@ -50,7 +50,7 @@ class ListPizzasCommand extends Command
 
         //Sets the header of the table
         $table->setHeaders((["Pizza", "Price in €"]));
-        $row = [];
+        $rows = [];
         foreach ($pizzas as $pizza)
         {
             //Sets a row with the needed information for each pizza
