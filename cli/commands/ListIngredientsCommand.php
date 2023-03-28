@@ -54,10 +54,10 @@ class ListIngredientsCommand extends Command
         foreach ($ingredients as $ingredient)
         {
             //Sets a row with the name of each ingredient
-            $row[] = [$ingredient->getName()];
+            $rows[] = [$ingredient->getName()];
         }
         //Creates dynamic rows with each ingredient
-        $table->setRows($row);
+        $table->setRows($rows);
         $table->render();
 
         return Command::SUCCESS;

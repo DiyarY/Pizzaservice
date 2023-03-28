@@ -54,10 +54,10 @@ class ListPizzasCommand extends Command
         foreach ($pizzas as $pizza)
         {
             //Sets a row with the needed information for each pizza
-            $row[] = [$pizza->getName(), $pizza->getPrice()];
+            $rows[] = [$pizza->getName(), $pizza->getPrice()];
         }
         //Creates dynamic rows with the respective information for each pizza
-        $table->setRows($row);
+        $table->setRows($rows);
         $table->render();
 
         return Command::SUCCESS;

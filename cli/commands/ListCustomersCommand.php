@@ -53,10 +53,10 @@ class ListCustomersCommand extends Command
         foreach ($customers as $customer)
         {
             //Sets a row with the needed information for each customer
-            $row[] = [$customer->getFirstName(), $customer->getLastName(), $customer->getZip(), $customer->getCity(), $customer->getCountry()];
+            $rows[] = [$customer->getFirstName(), $customer->getLastName(), $customer->getZip(), $customer->getCity(), $customer->getCountry()];
         }
         //Creates dynamic rows with the respective information for each customer
-        $table->setRows($row);
+        $table->setRows($rows);
         $table->render();
 
         return Command::SUCCESS;
