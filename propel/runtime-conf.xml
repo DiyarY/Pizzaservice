@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <propel>
+        <datasources default="pizzaService">
+            <datasource id="pizzaService">
+                <adapter>mysql</adapter>
+                <connection>
+                    <dsn>mysql:host=localhost;dbname=pizzaService</dsn>
+                    <user>pizzaUser</user>
+                    <password>pizzaKey</password>
+                </connection>
+            </datasource>
+        </datasources>
+    </propel>
+</config>
