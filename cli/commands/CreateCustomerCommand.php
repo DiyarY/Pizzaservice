@@ -49,9 +49,9 @@ class CreateCustomerCommand extends Command
 
         $inputCustomerLastName = $helper->ask($input, $output, new Question("Please enter the last name of the new customer: \n"));
 
-        $inputCustomerZip = $helper->ask($input, $output, new Question("Please enter the zip of the new customer: \n"));
+        $inputCustomerZip = $helper->ask($input, $output, new Question("Please enter the zip of the region, where you live: \n"));
 
-        $inputCustomerCity = $helper->ask($input, $output, new Question("Where does the new customer live: \n"));
+        $inputCustomerCity = $helper->ask($input, $output, new Question("Please enter the city where you live: \n"));
 
         $inputCustomerCountry = $helper->ask($input, $output, new Question("In which country does the new customer live: \n"));
 

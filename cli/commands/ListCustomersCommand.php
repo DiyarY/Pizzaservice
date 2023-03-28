@@ -42,18 +42,23 @@ class ListCustomersCommand extends Command
     {
         //Array of customer-table
         $customers = CustomerQuery::create()->find();
+        //Table output which contains each customer in the database
+        $table = new Table($output);
+
         $output->writeln("Currently there is a total of ".count($customers)." customers\n");
 
-        $table = new Table($output);
+        //Sets the header of the table
         $table->setHeaders(["Firstname", "Lastname", "ZIP", "City", "Country"]);
+        $row = [];
         foreach ($customers as $customer)
         {
-                //The values of the customer-table will be viewed in table format
-                $table->setRows([
-                    [$customer->getFirstName(), $customer->getLastName(), $customer->getZip(), $customer->getCity(), $customer->getCountry()],
-                ]);
-            $table->render();
+            //Sets a row with the needed information for each customer
+            $row[] = [$customer->getFirstName(), $customer->getLastName(), $customer->getZip(), $customer->getCity(), $customer->getCountry()];
         }
+        //Creates dynamic rows with the respective information for each customer
+        $table->setRows($row);
+        $table->render();
+
         return Command::SUCCESS;
     }
 }
